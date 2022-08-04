@@ -1,38 +1,32 @@
-import React from 'react'; // se importi senza graffe importi il default, con le 
+import React from 'react'; // se importi senza graffe importi il default, con le graffe importi tutto
+import Router from 'react-router-dom';
+import { Route, Routes, NavLink } from 'react-router-dom';
+import {Counter1View} from './views/Counter1View';
+import {Counter2View} from './views/Counter2View';
+import { Header } from './components/layouts/Header';
 import './App.css';
 
 function App() {
 
-  const [contatore, setContatore] = React.useState(0); // useState restituisce un array di 2 elementi, il primo è il valore dello stato, il secondo è la funzione per cambiarlo
-  const inc = () => {setContatore(contatore + 1)};
-  const dec = () => {setContatore(contatore - 1)};
-
-  // FUNZIONE CON CHIAMATA ASINCRONA
-  const random = () => {
-
-    const url = 'https://www.random.org/integers/?num=1&min=1&max=100&col=5&base=10&format=plain&rnd=new';
-    
-    fetch(url)
-        .then(res => {
-          res.text();           // restituisce una Promise che contiene il testo della risposta che recuperto o come text o come json
-          console.log(res)
-        })
-            .then(data => {         // data è il valore della Promise, è uso un altro then perchè aspetto il valore della Promise
-              console.log(data);
-              setContatore(contatore + parseInt(data));
-            })
-      .catch (e => console.log(e)); // se la chiamata fallisce, eseguo questa funzione
-  }
-
-
   return (
-    <div className="App">
-        <h1>{contatore}</h1>
-        <button onClick={inc}>+</button>
-        <button onClick={dec}>-</button>
-        <button onClick={random}>Random</button>
+    <div>
+
+      <Header/>
+      
+      <main>
+        Questo è il main dove vengono messi i componenti delle singole rotte
+        <br/>
+        <input type="text" placeholder="il testo rimane perchè non refresha la pagina"></input>
+          <Routes>   {/* ROUTES E' ESSENZIALE ALL ESTERNO DI UNO O PIU' ROUTE */}
+            <Route path="counter1" element={ <Counter1View /> } />   {/* element è una attributo che restituisce un componente */}
+            <Route path="counter2" element={ <Counter2View /> } />   {/* path è la rotta url che se è presente mi restituisce il componente */}
+          </Routes>
+        </main>
+
+      <footer>Questo è un footer</footer>
     </div>
-  );
+  )
+
 }
 
 export default App;
