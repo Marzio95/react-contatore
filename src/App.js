@@ -5,6 +5,8 @@ import {Counter1View} from './views/Counter1View';
 import {Counter2View} from './views/Counter2View';
 import { Header } from './components/layouts/Header';
 import './App.css';
+import { AxiosView } from './views/AxiosView';
+import { CounterReduxView } from './views/CounterReduxView';
 
 function App() {
 
@@ -20,6 +22,8 @@ function App() {
           <Routes>   {/* ROUTES E' ESSENZIALE ALL ESTERNO DI UNO O PIU' ROUTE */}
             <Route path="counter1" element={ <Counter1View /> } />   {/* element è una attributo che restituisce un componente */}
             <Route path="counter2" element={ <Counter2View /> } />   {/* path è la rotta url che se è presente mi restituisce il componente */}
+            <Route path="axios" element={ <AxiosView /> } /> 
+            <Route path="counter3" element={ <CounterReduxView /> } />
           </Routes>
         </main>
 

@@ -1,0 +1,19 @@
+{
+  "products": [
+      {
+          "id": 1,
+          "title": "T-shirt",
+          "price": 29.99
+      },
+      {
+          "id": 2,
+          "title": "Pantalone corto",
+          "price": 39.99
+      },
+      {
+        "id": 3,
+        "title": "Felpa",
+        "price": 69.99
+    }
+  ]
+}
