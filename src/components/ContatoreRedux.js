@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { inc } from "../slices/counterSlice"; 
+import { inc, dec, random } from "../slices/counterSlice"; 
 
 export function ContatoreRedux() {
 
@@ -12,8 +12,8 @@ export function ContatoreRedux() {
             <h2>ContatoreRedux</h2>
             <h1>{contatore}</h1>
             <button onClick={ () => dispatch( inc() ) }>+</button>
-            {/* <button onClick={dec}>-</button>
-            <button onClick={random}>Random</button> */}
+            <button onClick={ () => dispatch( dec() ) }>-</button>
+            <button onClick={ () => dispatch( random() ) }>Random</button>
         </div>
     )
 }

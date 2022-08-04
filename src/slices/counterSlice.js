@@ -1,20 +1,57 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import axios from "axios"; invece di richiamare axios, CREO UNA CARTELLA SERVICE CON UN FILE counterService.js
+// poi importo quel file al posto di axios, e metto const response = counterService.getRnd();
+// il return resta uguale al sottostante
 
 const initialState = {
-    contatore: 0
+    contatore: 0,
+    loading: false,
+    error: ''
 };
 
+export const random = createAsyncThunk(    
+    'counter/rnd', // nome che appare nel ReduxDevTools del browser
+
+    async () => {
+        const url = 'https://www.random.org/integers/?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new';
+        const res = await fetch(url);
+        const data = await res.text();
+
+        // const response = await axios.get(url); stessa chiamata con axios, sempre con await
+        // return Number(response.data);
+
+        return Number(data);
+    }
+);
+
+
 export const counterSlice = createSlice({
-    name: "counter", // questo è il nome che apparirà nel ReduxDevTools del browser
+    name: "counter",
     initialState,
     reducers: {
-        inc: (state) => { // state rappresenta lo stato attuale del componente (INITIAL_STATE)
-            state.contatore = state.contatore + 1;
-        }
+        inc: (state) => {
+            state.contatore += 1
+        },
+        dec: (state) => {
+            state.contatore -= 1
+        },
+    },
+    extraReducers: {
+        [random.pending]: (state) => {
+            state.loading = true;
+            state.error = '';
+        },
+        [random.fulfilled]: (state, { payload }) => {
+            state.loading = false;
+            state.contatore = state.contatore + payload;
+        },
+        [random.rejected]: (state) => {
+            state.loading = false;
+            state.error = 'Errore ';
+        },
     }
 });
 
-export const { inc } = counterSlice.actions; // actions è un oggetto che contiene tutte le funzioni per le azioni
-                                            // con il destructuring posso passsare un solo parametro dell'oggetto, in questo caso inc
+export const { inc, dec } = counterSlice.actions;
 
 export default counterSlice.reducer;
